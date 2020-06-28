@@ -106,7 +106,7 @@ class MLPlay:
                 self.commands = ["SPEED"]
                 return ["SPEED"]
             else:  
-                elif (2 not in grid): # Check forward 
+                if (2 not in grid): # Check forward 
                     # Back to lane center
                     if self.car_pos[0] > self.lanes[self.car_lane]:
                         self.commands = ["SPEED", "MOVE_LEFT"]
