@@ -94,29 +94,76 @@ class MLPlay:
             return move(grid= grid, coin_grid=coin_grid, speed_ahead = speed_ahead)
             
         def move(grid, coin_grid, speed_ahead):
-            if(1 not in grid and 4 not in grid and 5 not in grid and (1 in coin_grid or 4 in coin_grid)):
-                self.commands = ["SPEED", "MOVE_LEFT"]
-                return ["SPEED", "MOVE_LEFT"]
-            elif(3 not in grid and 6 not in grid and 5 not in grid and (3 in coin_grid or 6 in coin_grid)):
-                self.commands = ["SPEED", "MOVE_RIGHT"]
-                return ["SPEED", "MOVE_RIGHT"]
-            elif len(grid) == 0:
-                self.commands = ["SPEED"]
-                return ["SPEED"]
+            if len(grid) == 0:
+                if(2 in coin_grid):
+                    self.commands = ["SPEED"]
+                    return ["SPEED"]
+                elif(1 in coin_grid or 4 in coin_grid):
+                    self.commands = ["SPEED", "MOVE_LEFT"]
+                    return ["SPEED", "MOVE_LEFT"]
+                elif(3 in coin_grid or 6 in coin_grid):
+                    self.commands = ["SPEED", "MOVE_RIGHT"]
+                    return ["SPEED", "MOVE_RIGHT"]
+                else:
+                    self.commands = ["SPEED"]
+                    return ["SPEED"]
             else:  
                 if (2 not in grid): # Check forward 
                     # Back to lane center
-                    if self.car_pos[0] > self.lanes[self.car_lane]:
+                    if(2 in coin_grid):
+                        if self.car_pos[0] > self.lanes[self.car_lane]:
+                            self.commands = ["SPEED", "MOVE_LEFT"]
+                            return ["SPEED", "MOVE_LEFT"]
+                        elif self.car_pos[0 ] < self.lanes[self.car_lane]:
+                            self.commands = ["SPEED", "MOVE_RIGHT"]
+                            return ["SPEED", "MOVE_RIGHT"]
+                        else :return ["SPEED"]
+                    elif(1 not in grid and 4 not in grid and (1 in coin_grid or 4 in coin_grid)):
                         self.commands = ["SPEED", "MOVE_LEFT"]
                         return ["SPEED", "MOVE_LEFT"]
-                    elif self.car_pos[0 ] < self.lanes[self.car_lane]:
+                    elif(3 not in grid and 6 not in grid and (3 in coin_grid or 6 in coin_grid)):
                         self.commands = ["SPEED", "MOVE_RIGHT"]
                         return ["SPEED", "MOVE_RIGHT"]
-                    else :return ["SPEED"]
+                    else:
+                        if self.car_pos[0] > self.lanes[self.car_lane]:
+                            self.commands = ["SPEED", "MOVE_LEFT"]
+                            return ["SPEED", "MOVE_LEFT"]
+                        elif self.car_pos[0 ] < self.lanes[self.car_lane]:
+                            self.commands = ["SPEED", "MOVE_RIGHT"]
+                            return ["SPEED", "MOVE_RIGHT"]
+                        else :return ["SPEED"]
                 else:
                     if (5 in grid): # NEED to BRAKE
                         if (1 not in grid) and (4 not in grid) and (3 not in grid) and (6 not in grid):
                             return self.commands
+                        elif (1 not in grid) and (4 not in grid) and (7 not in grid) and (1 in coin_grid or 4 in coin_grid): # turn left 
+                            if self.car_vel < speed_ahead:
+                                self.commands = ["SPEED", "MOVE_LEFT"]
+                                return ["SPEED", "MOVE_LEFT"]
+                            else:
+                                self.commands = ["BRAKE", "MOVE_LEFT"]
+                                return ["BRAKE", "MOVE_LEFT"]
+                        elif (3 not in grid) and (6 not in grid) and (9 not in grid) and (3 in coin_grid or 6 in coin_grid): # turn right
+                            if self.car_vel < speed_ahead:
+                                self.commands = ["SPEED", "MOVE_RIGHT"]
+                                return ["SPEED", "MOVE_RIGHT"]
+                            else:
+                                self.commands = ["BRAKE", "MOVE_RIGHT"]
+                                return ["BRAKE", "MOVE_RIGHT"]
+                        elif (1 not in grid) and (4 not in grid) and (1 in coin_grid or 4 in coin_grid): # turn left 
+                            if self.car_vel < speed_ahead:
+                                self.commands = ["SPEED", "MOVE_LEFT"]
+                                return ["SPEED", "MOVE_LEFT"]
+                            else:
+                                self.commands = ["BRAKE", "MOVE_LEFT"]
+                                return ["BRAKE", "MOVE_LEFT"]
+                        elif (3 not in grid) and (6 not in grid) and (3 in coin_grid or 6 in coin_grid): # turn right
+                            if self.car_vel < speed_ahead:
+                                self.commands = ["SPEED", "MOVE_RIGHT"]
+                                return ["SPEED", "MOVE_RIGHT"]
+                            else:
+                                self.commands = ["BRAKE", "MOVE_RIGHT"]
+                                return ["BRAKE", "MOVE_RIGHT"]
                         elif (1 not in grid) and (4 not in grid) and (7 not in grid): # turn left 
                             if self.car_vel < speed_ahead:
                                 self.commands = ["SPEED", "MOVE_LEFT"]
