@@ -44,7 +44,7 @@ class MLPlay:
                 x_coin = self.car_pos[0] - coin[0]
                 y_coin = self.car_pos[1] - coin[1]
                 if x_coin <= 40 and x_coin >= -40 :      
-                    if y_coin > 0 and y_coin < 1000:
+                    if y_coin > 0 and y_coin < 700:
                         coin_grid.add(2)
                         if y_coin < 200:
                             coin_grid.add(5) 
@@ -93,8 +93,11 @@ class MLPlay:
                             grid.add(4)
             return move(grid= grid, coin_grid=coin_grid, speed_ahead = speed_ahead)
             
-        def move(grid, coin_grid, speed_ahead): 
-            if(1 not in grid and 4 not in grid and 5 not in grid and (1 in coin_grid or 4 in coin_grid)):
+        def move(grid, coin_grid, speed_ahead):
+            if(2 not in grid and 2 in coin_grid):
+                self.commands = ["SPEED"]
+                return ["SPEED"]
+            elif(1 not in grid and 4 not in grid and 5 not in grid and (1 in coin_grid or 4 in coin_grid)):
                 self.commands = ["SPEED", "MOVE_LEFT"]
                 return ["SPEED", "MOVE_LEFT"]
             elif(3 not in grid and 6 not in grid and 5 not in grid and (3 in coin_grid or 6 in coin_grid)):
