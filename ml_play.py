@@ -44,26 +44,27 @@ class MLPlay:
                 x_coin = self.car_pos[0] - coin[0]
                 y_coin = self.car_pos[1] - coin[1]
                 if x_coin <= 40 and x_coin >= -40 :      
-                    if y_coin > 0 and y_coin < 300:
+                    if y_coin > 0 and y_coin < 1000:
                         coin_grid.add(2)
                         if y_coin < 200:
                             coin_grid.add(5) 
                     elif y_coin < 0 and y_coin > -200:
                         coin_grid.add(8)
-                if x_coin > -100 and x_coin < -40 :
-                    if y_coin >= 150 and y_coin < 250:
+                if x_coin > -200 and x_coin < -40 :
+                    if y_coin >= 150 and y_coin < 1000:
                         coin_grid.add(3)
                     elif y_coin <= -80 and y_coin > -200:
                         coin_grid.add(9)
                     elif y_coin < 150 and y_coin > -80:
                         coin_grid.add(6)
-                if x_coin < 100 and x_coin > 40:
-                    if y_coin >= 150 and y_coin < 250:
+                if x_coin < 200 and x_coin > 40:
+                    if y_coin >= 150 and y_coin < 1000:
                         coin_grid.add(1)
                     elif y_coin <= -80 and y_coin > -200:
                         coin_grid.add(7)
                     elif y_coin < 150 and y_coin > -80:
                         coin_grid.add(4)
+                        
             for car in scene_info["cars_info"]:            
                 if car["id"] != self.player_no:
                     x = self.car_pos[0] - car["pos"][0] # x relative position
