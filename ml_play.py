@@ -98,9 +98,12 @@ class MLPlay:
                 print(scene_info["frame"], grid)
             if(1 not in grid and 4 not in grid and (1 in coin_grid or 4 in coin_grid)):
                 self.commands = ["SPEED", "MOVE_LEFT"]
+                return ["SPEED", "MOVE_LEFT"]
             elif(3 not in grid and 6 not in grid and (3 in coin_grid or 6 in coin_grid)):
                 self.commands = ["SPEED", "MOVE_RIGHT"]
+                return ["SPEED", "MOVE_RIGHT"]
             elif len(grid) == 0:
+                self.commands = ["SPEED"]
                 return ["SPEED"]
             else:  
                 elif (2 not in grid): # Check forward 
