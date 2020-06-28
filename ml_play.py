@@ -50,14 +50,14 @@ class MLPlay:
                             coin_grid.add(5) 
                     elif y_coin < 0 and y_coin > -200:
                         coin_grid.add(8)
-                if x_coin > -200 and x_coin < -40 :
+                if x_coin > -100 and x_coin < -40 :
                     if y_coin >= 150 and y_coin < 1000:
                         coin_grid.add(3)
                     elif y_coin <= -80 and y_coin > -200:
                         coin_grid.add(9)
                     elif y_coin < 150 and y_coin > -80:
                         coin_grid.add(6)
-                if x_coin < 200 and x_coin > 40:
+                if x_coin < 100 and x_coin > 40:
                     if y_coin >= 150 and y_coin < 1000:
                         coin_grid.add(1)
                     elif y_coin <= -80 and y_coin > -200:
