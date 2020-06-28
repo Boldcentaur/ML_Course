@@ -96,13 +96,13 @@ class MLPlay:
         def move(grid, coin_grid, speed_ahead): 
             if self.player_no == 0:
                 print(scene_info["frame"], grid)
-            if len(grid) == 0:
+            if(1 not in grid and 4 not in grid and (1 in coin_grid or 4 in coin_grid)):
+                self.commands = ["SPEED", "MOVE_LEFT"]
+            elif(3 not in grid and 6 not in grid and (3 in coin_grid or 6 in coin_grid)):
+                self.commands = ["SPEED", "MOVE_RIGHT"]
+            elif len(grid) == 0:
                 return ["SPEED"]
-            else:
-                if(1 not in grid and 4 not in grid and (1 in coin_grid or 4 in coin_grid)):
-                    self.commands = ["SPEED", "MOVE_LEFT"]
-                elif(3 not in grid and 6 not in grid and (3 in coin_grid or 6 in coin_grid)):
-                    self.commands = ["SPEED", "MOVE_RIGHT"]
+            else:  
                 elif (2 not in grid): # Check forward 
                     # Back to lane center
                     if self.car_pos[0] > self.lanes[self.car_lane]:
