@@ -29,6 +29,7 @@ class MLPlay:
         """
         def check_grid():
             grid = set()
+            coin_grid = set()
             speed_ahead = 100
             if self.car_pos[0] <= 35: # left bound
                 grid.add(1)
@@ -39,7 +40,31 @@ class MLPlay:
                 grid.add(6)
                 grid.add(9)
 
-            for car in scene_info["cars_info"]:
+            for coin in scene_info["coins"]:
+                x_coin = self.car_pos[0] - coin[0]
+                y_coin = self.car_pos[1] - coin[1]
+                if x_coin <= 40 and x_coin >= -40 :      
+                    if y_coin > 0 and y_coin < 300:
+                        coin_grid.add(2)
+                        if y_coin < 200:
+                            coin_grid.add(5) 
+                    elif y_coin < 0 and y_coin > -200:
+                        coin_grid.add(8)
+                if x_coin > -100 and x_coin < -40 :
+                    if y_coin >= 150 and y_coin < 250:
+                        coin_grid.add(3)
+                    elif y_coin <= -80 and y_coin > -200:
+                        coin_grid.add(9)
+                    elif y_coin < 150 and y_coin > -80:
+                        coin_grid.add(6)
+                if x_coin < 100 and x_coin > 40:
+                    if y_coin >= 150 and y_coin < 250:
+                        coin_grid.add(1)
+                    elif y_coin <= -80 and y_coin > -200:
+                        coin_grid.add(7)
+                    elif y_coin < 150 and y_coin > -80:
+                        coin_grid.add(4)
+            for car in scene_info["cars_info"]:            
                 if car["id"] != self.player_no:
                     x = self.car_pos[0] - car["pos"][0] # x relative position
                     y = self.car_pos[1] - car["pos"][1] # y relative position
@@ -65,15 +90,19 @@ class MLPlay:
                             grid.add(7)
                         elif y < 150 and y > -80:
                             grid.add(4)
-            return move(grid= grid, speed_ahead = speed_ahead)
+            return move(grid= grid, coin_grid=coin_grid, speed_ahead = speed_ahead)
             
-        def move(grid, speed_ahead): 
+        def move(grid, coin_grid, speed_ahead): 
             if self.player_no == 0:
                 print(scene_info["frame"], grid)
             if len(grid) == 0:
                 return ["SPEED"]
             else:
-                if (2 not in grid): # Check forward 
+                if(1 not in grid and 4 not in grid and (1 in coin_grid or 4 in coin_grid)):
+                    self.commands = ["SPEED", "MOVE_LEFT"]
+                elif(3 not in grid and 6 not in grid and (3 in coin_grid or 6 in coin_grid)):
+                    self.commands = ["SPEED", "MOVE_RIGHT"]
+                elif (2 not in grid): # Check forward 
                     # Back to lane center
                     if self.car_pos[0] > self.lanes[self.car_lane]:
                         self.commands = ["SPEED", "MOVE_LEFT"]
